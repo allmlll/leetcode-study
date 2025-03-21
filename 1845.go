@@ -11,11 +11,12 @@ type TreeNodea struct {
 }
 
 // Constructor 构造函数，用于初始化 SeatManager
-func Constructor(n int) SeatManager {
-	return SeatManager{
-		Root: buildBST(1, n),
-	}
-}
+//
+//	func Constructor(n int) SeatManager {
+//		return SeatManager{
+//			Root: buildBST(1, n),
+//		}
+//	}
 func buildBST(start, end int) *TreeNodea {
 	if start > end {
 		return nil
