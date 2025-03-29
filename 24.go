@@ -1,21 +1,18 @@
 package main
 
 func swapPairs(head *ListNode) *ListNode {
-	dummy := &ListNode{}
-	dummy.Next = head
-
-	pre, nxt := dummy.Next, dummy.Next.Next
-	for pre != nil && nxt != nil {
-		if nxt.Next == nil {
-			nxt.Next = pre
-			pre.Next = nil
-		} else {
-			pre.Next = nxt.Next
-			nxt.Next = pre
-			pre = pre.Next
-			nxt = pre.Next
-		}
-
+	dummy := &ListNode{
+		Val:  0,
+		Next: head,
+	}
+	c := dummy
+	for c.Next != nil && c.Next.Next != nil {
+		pre := c.Next
+		nxt := pre.Next
+		pre.Next = nxt.Next
+		nxt.Next = pre
+		c.Next = nxt
+		c = pre
 	}
 	return dummy.Next
 

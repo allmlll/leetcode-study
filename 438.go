@@ -2,33 +2,51 @@ package main
 
 func findAnagrams(s string, p string) []int {
 	var res []int
-	mp := map[rune]int{}
-	mp2 := map[rune]int{}
-	for _, ps := range p {
-		mp[ps]++
+	mp := make(map[byte]int)
+	plen := len(p)
+	slen := len(s)
+	if plen > slen {
+		return []int{}
 	}
+	block := make(map[byte]int)
+	for i := 0; i < plen; i++ {
+		mp[p[i]]++
+	}
+	//初始化滑块
+	for i := 0; i < plen; i++ {
+		block[s[i]]++
+	}
+	if check(block, mp) {
+		res = append(res, 0)
+	}
+	for i := plen; i < slen; i++ {
 
-loop:
-	for i := 0; i <= len(s)-len(p); i++ {
-		for r, i2 := range mp {
-			mp2[r] = i2
-		}
-		for j := i; j < i+len(p); j++ {
-			for r, _ := range mp2 {
-				if rune(s[j]) == r {
-					mp2[r]--
-					break
+		if _, ok := mp[s[i]]; ok {
+			block[s[i-plen]]--
+			block[s[i]]++
+		} else {
+			block = make(map[byte]int)
+			if i+plen < slen {
+				for j := i + 1; j < i+1+plen; j++ {
+					block[s[j]]++
+
 				}
-			}
-		}
 
-		for _, mpst := range mp2 {
-			if mpst != 0 {
-				continue loop
 			}
-		}
-		res = append(res, i)
+			i = i + plen
 
+		}
+		if check(block, mp) {
+			res = append(res, i-plen+1)
+		}
 	}
 	return res
+}
+func check(block, mp map[byte]int) bool {
+	for key, value := range mp {
+		if block[key] != value {
+			return false
+		}
+	}
+	return true
 }

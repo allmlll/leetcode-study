@@ -1,19 +1,17 @@
 package main
 
 func maxSubArray(nums []int) int {
-	sum := nums[0]
-	for i := 0; i < len(nums); i++ {
-
-		for j := 0; j < len(nums)-i; j++ {
-			cul := 0
-			for k := i; k <= i+j; k++ {
-				cul += nums[k]
-			}
-			sum = max(sum, cul)
+	res := nums[0]
+	for i := 1; i < len(nums); i++ {
+		if nums[i]+nums[i-1] > nums[i] {
+			nums[i] = nums[i] + nums[i-1]
+		}
+		if nums[i] > res {
+			res = nums[i]
 		}
 
 	}
-	return sum
+	return res
 }
 
 //func main() {
