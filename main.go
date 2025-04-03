@@ -1,5 +1,10 @@
 package main
 
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
 func listinit(arr []int) *ListNode {
 	var head *ListNode
 	p := head
@@ -32,6 +37,12 @@ func arrayToLinkedList(arr []int) *ListNode {
 
 	return head
 }
+
+type TreeNode struct {
+	Val         int
+	Left, Right *TreeNode
+}
+
 func ArrayToTree(arr []int) *TreeNode {
 	if len(arr) == 0 || arr[0] == -1 {
 		return nil // 处理空数组或根节点为空的情况
@@ -65,6 +76,4 @@ func ArrayToTree(arr []int) *TreeNode {
 	return root
 }
 func main() {
-	root := ArrayToTree([]int{3, 9, 20, -1, -1, 15, 7})
-	maxDepth(root)
 }
